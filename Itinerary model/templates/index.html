@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Itinerary Generator</title>
+</head>
+<body>
+    <h1>Generate a Custom Itinerary</h1>
+    <form method="POST" action="/generate_itinerary">
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location"><br><br>
+        <label for="days">Number of Days:</label><br>
+        <input type="number" id="days" name="days"><br><br>
+	<label for="days">Budget:</label><br>
+        <input type="number" id="budget" name="budget"><br><br>
+	<label for="days">Currency:</label><br>
+        <input type="text" id="currency" name="currency"><br><br>
+        <button type="submit">Generate Itinerary</button>
+    </form>
+</body>
+</html>
