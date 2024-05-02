@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request
 import google.generativeai as genai  # Assuming correct import path
-from IPython.display import display
-from IPython.display import Markdown
-import pathlib
-
+import markdown
 app = Flask(__name__)
 
 # Load your Google API key from a secure environment variable
@@ -20,19 +17,17 @@ def generate_itinerary():
     location = request.form['location']
     days = request.form['days']
     budget = request.form['budget']
+    trip_type = request.form['type']
     currency = request.form['currency']
-    # preferences = request.form['preferences']
 
     # Generate content using the model
-    response = model.generate_content(f"Give itinerary for '{location}' for '{days}' days in budget '{budget} {currency}'") # with keeping in mind '{preferences}'")
+    response = model.generate_content(f"Give itinerary for '{location}' for '{days}' days in budget '{budget} {currency}' make it suitable for {trip_type} make sure the itinerary total amount is within budget")
 
-    # Return the generated itinerary as Markdown
-    return render_template('result.html', itinerary_markdown=to_markdown(response.text))
+    markdown_text = response.text
+    html_content = markdown.markdown(markdown_text)
 
-def to_markdown(text):
-  text = text.replace('•', '  *')
-  # return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
-  return text
+    # Pass the HTML content to the template
+    return render_template('result.html', itinerary_html=html_content)
 
 if __name__ == '__main__':
     app.run(debug=True)
